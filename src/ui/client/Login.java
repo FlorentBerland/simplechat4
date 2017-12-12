@@ -37,7 +37,9 @@ public class Login extends JFrame implements ActionListener {
 		JLabel LBL_title = new JLabel();
 		JLabel LBL_presentation = new JLabel();
 		JLabel LBL_wru = new JLabel("Who are you?");
-		JPanel PAN_center = new JPanel(new GridLayout());
+		JPanel PAN_title = new JPanel(new FlowLayout());
+		JPanel PAN_center = new JPanel(new BorderLayout());
+		JPanel PAN_center_south = new JPanel(new BorderLayout());
 		JPanel PAN_south = new JPanel(new FlowLayout());
 		JTextField TXT_nameBox = new JTextField();
 		
@@ -51,20 +53,23 @@ public class Login extends JFrame implements ActionListener {
 		BT_cancel.setBackground(new Color(255,150,150));
 		BT_cancel.addActionListener(this);
 		
-		BT_avatar = new JButton("Choose an avatar");
-		BT_avatar.addActionListener(this);
 		
-		LBL_title.setText("<html><h1><font size=-1 color=grey>Simple</font><i><font color=blue>chat</font></i><font size=-1 color=grey>4</font></h1></html>");
+		//BT_avatar = new JButton("Choose an avatar");
+		//BT_avatar.addActionListener(this);
+		
+		LBL_title.setText("<html><h1><font size=+2 color=#6495ED>SimpleChat 4</font></h1></html>");
+		LBL_presentation.setText("<html><p>Welcome User ! You're going to use one of the MOST IMPRESSIVE APP NEVER CODED SimpleChat ! You will be able to discuss with a lot of people.</p><br/></html>");
 		TXT_nameBox.grabFocus();
 		
-		
-		PAN_center.add(LBL_presentation);
-		PAN_center.add(LBL_wru);
-		PAN_center.add(TXT_nameBox);
+		PAN_title.add(LBL_title);
+		PAN_center_south.add(LBL_wru, BorderLayout.WEST);
+		PAN_center_south.add(TXT_nameBox);
+		PAN_center.add(LBL_presentation, BorderLayout.NORTH);
+		PAN_center.add(PAN_center_south, BorderLayout.SOUTH);
 		PAN_south.add(BT_login);
 		PAN_south.add(BT_cancel);
-		this.add(LBL_title, BorderLayout.NORTH);
-		this.add(BT_avatar, BorderLayout.WEST);
+		this.add(PAN_title, BorderLayout.NORTH);
+		//this.add(BT_avatar, BorderLayout.WEST);
 		this.add(PAN_center, BorderLayout.CENTER);
 		this.add(PAN_south, BorderLayout.SOUTH);
 		
@@ -110,10 +115,10 @@ public class Login extends JFrame implements ActionListener {
 		{
 			
 		}
-		else if(arg0.getSource() == BT_avatar)
-		{
+	//	else if(arg0.getSource() == BT_avatar)
+	//	{
 			
-		}
+	//	}
 		else if(arg0.getSource() == BT_cancel)
 		{
 			System.exit(0);
