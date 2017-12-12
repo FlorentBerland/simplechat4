@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import client.*;
 import common.ChatIF;
@@ -8,10 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import ui.client.Login;
+import ui.client.*;
 
 @SuppressWarnings("serial")
-public class ClientWindow extends JFrame implements ChatIF, ActionListener {
+public class ClientWindow extends JFrame implements ChatIF, ActionListener, Observer {
 
 	public final static int DEFAULT_PORT = 5555;
 	
@@ -125,7 +127,9 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener {
 			host = "localhost";
 		}
 		ClientWindow chat = new ClientWindow(host, DEFAULT_PORT);
-		Login log = new Login();
+		ConfigureServer conf = new ConfigureServer(chat);
+		conf.setVisible(true);
+		//Login log = new Login();
 		//chat.setVisible(true);
 	}
 
@@ -141,5 +145,13 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener {
 		} else if(arg0.getSource() == parametres){
 			
 		}
+	}
+
+	/*
+	 * Is notified when ConfigureServer is modified
+	 */
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		this.setVisible(true);
 	}
 }
