@@ -11,7 +11,7 @@ import javax.swing.*;
 import common.AdaptedObservable;
 
 @SuppressWarnings("serial")
-public class ConfigureServer extends JFrame implements ActionListener {
+public class ConfigureServer extends JFrame implements ActionListener, Observer {
 	
 	JButton BT_connect;
 	JButton BT_cancel;
@@ -19,9 +19,14 @@ public class ConfigureServer extends JFrame implements ActionListener {
 	JTextField TXT_ip;
 	JTextField TXT_port;
 	Observable obs;
+	Login log;
 	
 	public ConfigureServer(Observer obs)
 	{
+		
+		log = new Login(this);
+		log.setVisible(true);
+		
 		this.obs = new AdaptedObservable(obs);
 		this.setLayout(new BorderLayout());
 		this.setTitle("simplechat4");
@@ -65,13 +70,8 @@ public class ConfigureServer extends JFrame implements ActionListener {
 	public void setIp(String value){ TXT_ip.setText(value); }
 	public int getPort(){ return Integer.parseInt(TXT_port.getText()); }
 	public void setPort(int value){ TXT_port.setText(String.valueOf(value)); }
-	
-	@SuppressWarnings("unused")
-	public static void main(String[] args)
-	{
-		//ConfigureServer cs = new ConfigureServer();
-		//cs.setVisible(true);
-	}
+	public String getName(){ return log.getName(); }
+	public void setName(String value){ log.setName(value); }
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -82,11 +82,18 @@ public class ConfigureServer extends JFrame implements ActionListener {
 		}
 		else if(arg0.getSource() == BT_return)
 		{
+			this.setVisible(false);
+			log.setVisible(true);
 			
 		}
 		else if(arg0.getSource() == BT_cancel)
 		{
 			System.exit(0);
 		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		this.setVisible(true);
 	}
 }

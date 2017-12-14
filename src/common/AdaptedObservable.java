@@ -7,11 +7,11 @@ public class AdaptedObservable extends Observable {
 
 	public AdaptedObservable(){}
 	public AdaptedObservable(Observer obs) {
-		this.addObserver(obs);
+		super.addObserver(obs);
 	}
-	public void notifyObsevers()
+	public void notifyObservers()
 	{
-		this.setChanged();
+		super.setChanged();
 		super.notifyObservers();
 	}
 }

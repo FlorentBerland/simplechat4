@@ -24,7 +24,9 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 	JButton envoyer;
 	JButton deconnexion;
 	JButton parametres;
+	ConfigureServer conf;
 	
+	@SuppressWarnings("unused")
 	public ClientWindow(String host, int port)
 	{
 		try 
@@ -37,8 +39,11 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 					+ " Terminating client.");
 			System.exit(1);
 		}
+		
+		conf = new ConfigureServer(this);
 
 		this.setLayout(new BorderLayout());
+		this.setTitle("simplechat4");
 		
 		JPanel autresPersonnes = new JPanel(new GridLayout(1,0));
 		JPanel zoneChat = new JPanel(new BorderLayout());
@@ -113,9 +118,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		ta.setText(ta.getText() + message + '\n');
 	}
 
-	/**
-	 * @param args
-	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		String host = "";
 		try
@@ -127,10 +130,6 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 			host = "localhost";
 		}
 		ClientWindow chat = new ClientWindow(host, DEFAULT_PORT);
-		ConfigureServer conf = new ConfigureServer(chat);
-		conf.setVisible(true);
-		//Login log = new Login();
-		//chat.setVisible(true);
 	}
 
 	@Override
@@ -153,5 +152,8 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		this.setVisible(true);
+		client.handleMessageFromClientUI("#sethost " + conf.getIp());
+		client.handleMessageFromClientUI("#setport " + conf.getPort());
+		client.handleMessageFromClientUI("#login " + conf.getName());
 	}
 }

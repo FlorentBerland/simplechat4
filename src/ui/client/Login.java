@@ -3,7 +3,12 @@ package ui.client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.*;
+
+import common.AdaptedObservable;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame implements ActionListener {
@@ -15,13 +20,16 @@ public class Login extends JFrame implements ActionListener {
 	JButton BT_login;
 	JButton BT_cancel;
 	JButton BT_avatar;
+	Observable obs;
 	
-	public Login()
+	public Login(Observer obs)
 	{
+		this.obs = new AdaptedObservable(obs);
 		build();
 	}
 
-	public Login(String name, String host, int clPort, int svPort) {
+	public Login(Observer obs, String name, String host, int clPort, int svPort) {
+		this.obs = new AdaptedObservable(obs);
 		this.name = name;
 		this.host = host;
 		this.clPort = clPort;
@@ -41,7 +49,7 @@ public class Login extends JFrame implements ActionListener {
 		JPanel PAN_center = new JPanel(new BorderLayout());
 		JPanel PAN_center_south = new JPanel(new BorderLayout());
 		JPanel PAN_south = new JPanel(new FlowLayout());
-		JTextField TXT_nameBox = new JTextField();
+		TXT_nameBox = new JTextField();
 		
 		BT_login = new JButton("Login");
 		BT_login.setForeground(Color.white);
@@ -78,11 +86,11 @@ public class Login extends JFrame implements ActionListener {
 	}
 
 	public String getName() {
-		return name;
+		return TXT_nameBox.getText();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		TXT_nameBox.setText(name);
 	}
 
 	public String getHost() {
@@ -113,7 +121,8 @@ public class Login extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == BT_login)
 		{
-			
+			this.setVisible(false);
+			obs.notifyObservers();
 		}
 	//	else if(arg0.getSource() == BT_avatar)
 	//	{
