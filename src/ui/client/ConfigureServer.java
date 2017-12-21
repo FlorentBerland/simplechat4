@@ -64,6 +64,7 @@ public class ConfigureServer extends JFrame implements ActionListener, Observer 
 		this.add(PAN_south, BorderLayout.SOUTH);
 		
 		this.pack();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public String getIp(){ return TXT_ip.getText(); }

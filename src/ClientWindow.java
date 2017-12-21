@@ -62,6 +62,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 				+ "</html>");*/
 		
 		tf.setPreferredSize(new Dimension(300,25));
+		tf.requestFocus();
 		
 		// Bouton envoyer
 		envoyer.setForeground(Color.white);
@@ -70,6 +71,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		//envoyer.setBackground(new Color(90,240,50));
 		envoyer.setPreferredSize(new Dimension(envoyer.getIcon().getIconWidth(), envoyer.getIcon().getIconHeight()));
 		envoyer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		envoyer.setToolTipText("Send");
 		envoyer.addActionListener(this);
 		
 		// Bouton déconnexion
@@ -79,6 +81,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		deconnexion.setPreferredSize(new Dimension(deconnexion.getIcon().getIconWidth(), deconnexion.getIcon().getIconHeight()));
 		//deconnexion.setBackground(new Color(255,100,80));
 		deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		deconnexion.setToolTipText("Logoff");
 		deconnexion.addActionListener(this);
 		
 		// Bouton paramètres
@@ -88,6 +91,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		parametres.setPreferredSize(new Dimension(parametres.getIcon().getIconWidth(), parametres.getIcon().getIconHeight()));
 		//parametres.setBackground(new Color(210,190,30));
 		parametres.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		parametres.setToolTipText("Settings");
 		parametres.addActionListener(this);
 		
 		// Zone de chat
@@ -96,6 +100,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		ta.setDisabledTextColor(Color.black);
 		ta.setPreferredSize(new Dimension(300, 200));
 		ta.setForeground(Color.black);
+		ta.setLineWrap(true);
 		
 		// Tout ajouter dans la fenêtre
 		entreeTexte.add(tf);

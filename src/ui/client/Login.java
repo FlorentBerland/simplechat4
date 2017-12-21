@@ -83,6 +83,7 @@ public class Login extends JFrame implements ActionListener {
 		
 		this.pack();
 		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public String getName() {
