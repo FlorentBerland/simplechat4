@@ -5,15 +5,16 @@ import java.util.Observer;
 import client.*;
 import common.ChatIF;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.text.DefaultCaret;
 
 import ui.client.*;
 
 @SuppressWarnings("serial")
-public class ClientWindow extends JFrame implements ChatIF, ActionListener, Observer {
+public class ClientWindow extends JFrame implements ChatIF, ActionListener, Observer, KeyListener {
 
 	public final static int DEFAULT_PORT = 5555;
 	
@@ -51,6 +52,16 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		JPanel entreeTexte = new JPanel(new FlowLayout());
 		tf = new JTextField();
 		ta = new JTextArea();
+		
+		JScrollPane sp = new JScrollPane(ta);
+		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		sp.setPreferredSize(new Dimension(300, 200));
+		
+		// Set autoscrolling
+		DefaultCaret caret = (DefaultCaret)ta.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
 		envoyer = new JButton();
 		parametres = new JButton();
 		deconnexion = new JButton();
@@ -62,6 +73,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 				+ "</html>");*/
 		
 		tf.setPreferredSize(new Dimension(300,25));
+		tf.addKeyListener(this);
 		tf.requestFocus();
 		
 		// Bouton envoyer
@@ -98,7 +110,6 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		ta.setEnabled(false);
 		ta.setBorder(new LineBorder(Color.lightGray));
 		ta.setDisabledTextColor(Color.black);
-		ta.setPreferredSize(new Dimension(300, 200));
 		ta.setForeground(Color.black);
 		ta.setLineWrap(true);
 		
@@ -106,7 +117,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		entreeTexte.add(tf);
 		entreeTexte.add(envoyer);
 		zoneChat.add(entreeTexte, BorderLayout.SOUTH);
-		zoneChat.add(ta, BorderLayout.CENTER);	
+		zoneChat.add(sp, BorderLayout.CENTER);	
 		zonesControles.add(parametres);
 		zonesControles.add(deconnexion);
 		this.add(autresPersonnes, BorderLayout.WEST);
@@ -137,13 +148,18 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		ClientWindow chat = new ClientWindow(host, DEFAULT_PORT);
 	}
 
+	private void performSend()
+	{
+		if(!tf.getText().isEmpty()){
+			client.handleMessageFromClientUI(tf.getText());
+			tf.setText("");
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == envoyer){
-			if(!tf.getText().isEmpty()){
-				client.handleMessageFromClientUI(tf.getText());
-				tf.setText("");
-			}
+			performSend();
 		} else if(arg0.getSource() == deconnexion){
 			client.handleMessageFromClientUI("#logoff");
 		} else if(arg0.getSource() == parametres){
@@ -160,5 +176,25 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		client.handleMessageFromClientUI("#sethost " + conf.getIp());
 		client.handleMessageFromClientUI("#setport " + conf.getPort());
 		client.handleMessageFromClientUI("#login " + conf.getName());
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			performSend();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

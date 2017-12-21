@@ -2,6 +2,8 @@ package ui.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -11,7 +13,7 @@ import javax.swing.*;
 import common.AdaptedObservable;
 
 @SuppressWarnings("serial")
-public class Login extends JFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener, KeyListener {
 	
 	String name, host;
 	int clPort, svPort;
@@ -41,6 +43,7 @@ public class Login extends JFrame implements ActionListener {
 	{
 		this.setTitle("simplechat4");
 		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(600,200));
 		
 		JLabel LBL_title = new JLabel();
 		JLabel LBL_presentation = new JLabel();
@@ -49,7 +52,9 @@ public class Login extends JFrame implements ActionListener {
 		JPanel PAN_center = new JPanel(new BorderLayout());
 		JPanel PAN_center_south = new JPanel(new BorderLayout());
 		JPanel PAN_south = new JPanel(new FlowLayout());
+		
 		TXT_nameBox = new JTextField();
+		TXT_nameBox.addKeyListener(this);
 		
 		BT_login = new JButton("Login");
 		BT_login.setForeground(Color.white);
@@ -133,6 +138,27 @@ public class Login extends JFrame implements ActionListener {
 		{
 			System.exit(0);
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			this.setVisible(false);
+			obs.notifyObservers();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
