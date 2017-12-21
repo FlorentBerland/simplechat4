@@ -26,6 +26,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 	JButton deconnexion;
 	JButton parametres;
 	ConfigureServer conf;
+	Settings settings;
 	
 	@SuppressWarnings("unused")
 	public ClientWindow(String host, int port)
@@ -42,6 +43,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		}
 		
 		conf = new ConfigureServer(this);
+		settings = new Settings(this);
 
 		this.setLayout(new BorderLayout());
 		this.setTitle("simplechat4");
@@ -163,7 +165,7 @@ public class ClientWindow extends JFrame implements ChatIF, ActionListener, Obse
 		} else if(arg0.getSource() == deconnexion){
 			client.handleMessageFromClientUI("#logoff");
 		} else if(arg0.getSource() == parametres){
-			
+			settings.setVisible(true);
 		}
 	}
 
